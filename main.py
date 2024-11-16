@@ -22,6 +22,7 @@ def referenceVidFrames(vidURL, image):
     print(video)
     referenceFrames = []
     bestMatch = 0
+    bestFrame = None
 
     while True: # loop through the frames and compare them to the user input image
         ret, frame = video.read()
@@ -31,18 +32,27 @@ def referenceVidFrames(vidURL, image):
 
         template = image.copy() #comparing against this pic
         result = cv2.matchTemplate(frame, template, cv2.TM_CCOEFF_NORMED) # normalized cross correllation between the template and current frame
-        # print(result[0][0])
+        # crossCorrelation = (result[0][0])
+        rows, cols = len(result), len(result[0])
+        sum = 0
+        for row in range(rows):
+            for col in range(cols):
+                sum += result[row][col]
         
-        if (result[0][0]).all() > bestMatch: # get the highest correlation
-            bestMatch = result
+        if sum > bestMatch:
+            bestMatch = sum
+            bestFrame = frame
 
-    print(bestMatch)
+        # if (result[0][0]).all() > bestMatch: # get the highest correlation
+        #     bestMatch = result
+
+    print(bestMatch, bestFrame)
     # print("Match Score:", result[0][0])
 
-    video.release()
+    # video.release()
     # return referenceFrames
 
-print(referenceVidFrames(vidURL, image))
+referenceVidFrames(vidURL, image)
 # video_frames = {some function that returns all the frames in a list or something}
 
 # for frame in video_frames:
