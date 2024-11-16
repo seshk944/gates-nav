@@ -1,12 +1,13 @@
-# import cv2
-# import numpy as np
+import cv2
+import numpy as np
 import math
-import heapq
+import matplotlib
+import copy
 
 # GATES NAV APP
 
-# image_path = "path/to/your/image.jpg" # path file to user's image
-# image = cv2.imread(image_path, cv2.IMREAD_COLOR) # loads image in RBG color
+image_path = "C:\\Users\\Alexi\\OneDrive\\Downloads\\15-112 Fundamentals of Programming and CS\\vidSS.png" # path file to user's image
+image = cv2.imread(image_path, cv2.IMREAD_COLOR) # loads image in RBG color
 # https://www.geeksforgeeks.org/python-opencv-cv2-imshow-method/
 # https://realpython.com/python-heapq-module/
 
@@ -14,20 +15,34 @@ import heapq
 ####################################################################################################################
 
 # process video, frame by frame --> compare each frame to user's image
-cap = cv2.VideoCapture('video url')
+vidURL = "C:\\Users\\Alexi\\OneDrive\\Downloads\\15-112 Fundamentals of Programming and CS\\hack112TestVid.MOV"
 
-if not cap.isOpened():
-    print('Error')
- while cap.isOpened():
-    ret, frame = cap.read
-    if ret:
-        cv2.imshow('Frame', frame)
-    else:
-        break
+def referenceVidFrames(vidURL, image):
+    video = cv2.VideoCapture(vidURL)
+    print(video)
+    referenceFrames = []
+    bestMatch = 0
 
-cap.release()
-cv2.destroyAllWindows()
+    while True: # loop through the frames and compare them to the user input image
+        ret, frame = video.read()
+        if not ret:
+            break
+        referenceFrames.append(frame)
 
+        template = image.copy() #comparing against this pic
+        result = cv2.matchTemplate(frame, template, cv2.TM_CCOEFF_NORMED) # normalized cross correllation between the template and current frame
+        # print(result[0][0])
+        
+        if (result[0][0]).all() > bestMatch: # get the highest correlation
+            bestMatch = result
+
+    print(bestMatch)
+    # print("Match Score:", result[0][0])
+
+    video.release()
+    # return referenceFrames
+
+print(referenceVidFrames(vidURL, image))
 # video_frames = {some function that returns all the frames in a list or something}
 
 # for frame in video_frames:
