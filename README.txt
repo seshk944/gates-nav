@@ -8,3 +8,6 @@ a. using template matching with openCV to compare images and determine where in 
 b. this establishes a starting point on the floor, which is passed to the a* search algorithm function
 c. this search algorithm can quickly find the fastest path to the nearest desired locations (which can also be
     provided by user input i.e. a dropdown menu)
+
+resources:
+https://maps.scottylabs.org/GHC-5 

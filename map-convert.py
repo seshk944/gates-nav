@@ -42,7 +42,7 @@ def image_to_map(file_path, threshold=200, scale=10):
 
 # Usage example
 # this is not working bruh
-file_path = 'C:\Users\saish\OneDrive\Desktop\sample-image.jpeg'
+file_path = 'C:\\Users\\saish\\OneDrive\\Desktop\\sample-image.jpeg'
 map_string = image_to_map(file_path)
 if map_string:
     print(map_string)
